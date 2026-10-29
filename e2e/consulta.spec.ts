@@ -65,3 +65,10 @@ test("o tema escolhido fica salvo depois de recarregar", async ({ page }) => {
   await page.reload();
   await expect(html).toHaveClass(antes ? /^(?!.*\bdark\b)/ : /\bdark\b/);
 });
+
+test("as páginas pedem às buscas para não indexar", async ({ page }) => {
+  for (const caminho of ["/", "/modelos/tabnet"]) {
+    await page.goto(caminho);
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", /noindex/);
+  }
+});

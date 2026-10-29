@@ -5,6 +5,8 @@ import { APP_NAME } from "@/lib/nav";
 import "./globals.css";
 
 export const metadata: Metadata = {
+  // Conteúdo reescrito do material da OIAA: circula só pelo link, fora dos buscadores.
+  robots: { index: false, follow: false },
   title: { default: APP_NAME, template: `%s · ${APP_NAME}` },
   description:
     "Guia de consulta rápida para a Fase 2 da OIAA 2026: quando usar cada modelo e como configurar cada parâmetro.",
