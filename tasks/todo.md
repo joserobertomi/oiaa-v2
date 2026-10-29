@@ -188,8 +188,8 @@ Plano: [`plan.md`](plan.md). Marque `[x]` ao concluir. Verificação padrão de 
 **Description:** Gerar o relatório de itens `complemento`, entregar ao professor para revisão, aplicar correções, e publicar na Vercel. **Domínio/deploy exigem confirmação.**
 **Acceptance criteria:**
 - [ ] Professor revisou os complementos (ou aprovou o conjunto); ajustes aplicados.
-- [ ] Deploy funcionando; as páginas principais abrem pelo link público.
-- [ ] Página mostra a fonte e a data do conteúdo.
+- [x] Deploy funcionando; as páginas principais abrem pelo link público: https://verumakers-oiaa-v2.vercel.app/ (verificado em 2026-10-29).
+- [x] Página mostra a fonte e a data do conteúdo (rodapé).
 **Verification:** `npm run build`; abrir o link público no celular e no notebook.
 **Dependencies:** T12, T13
 **Files:** configuração de deploy (mínima)
