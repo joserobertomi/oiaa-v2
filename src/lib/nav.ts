@@ -8,3 +8,6 @@ export const NAV = [
 ] as const;
 
 export const APP_NAME = "Verumakers OIAA";
+
+/** Data em que o material da OIAA foi copiado para docs/. */
+export const CONTENT_DATE = "28/10/2026";
