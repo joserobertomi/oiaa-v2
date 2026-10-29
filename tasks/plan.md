@@ -57,17 +57,17 @@ T5 e T6 são independentes entre si (podem ser paralelizadas). T7, T8 e T9 são 
 ### Checkpoint 3: Conteúdo de modelos completo
 
 ### Phase 4: Consulta
-- [ ] T7: Comparador por trilha
+- [x] T7: Comparador por trilha
 - [x] T8: Diagnóstico por sintoma e checklist de erros silenciosos
 - [x] T9: Páginas de teoria
-- [ ] T10: Busca
-- [ ] T11: Home
+- [x] T10: Busca
+- [x] T11: Home
 
 ### Checkpoint 4: Todos os fluxos de consulta funcionam
 
 ### Phase 5: Polimento e entrega
-- [ ] T12: Acessibilidade, tema e desempenho
-- [ ] T13: Testes e2e
+- [x] T12: Acessibilidade, tema e desempenho
+- [x] T13: Testes e2e
 - [ ] T14: Revisão dos complementos e deploy
 
 ### Checkpoint 5: Pronto para os alunos

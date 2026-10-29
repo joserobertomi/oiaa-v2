@@ -104,8 +104,8 @@ Plano: [`plan.md`](plan.md). Marque `[x]` ao concluir. Verificação padrão de 
 ### T7: Comparador por trilha
 **Description:** Página `/modelos` com seletor de trilha e tabela lado a lado dos 3 modelos (perfil, quando escolher, taxa, lote, pegadinha, custo/tamanho, o que esperar). Inclui o texto "como decidir" por trilha.
 **Acceptance criteria:**
-- [ ] Cada trilha exibe os 3 modelos em colunas legíveis também no celular (rolagem horizontal ou empilhado).
-- [ ] Cada coluna linka para a ficha do modelo.
+- [x] Cada trilha exibe os 3 modelos em colunas legíveis também no celular (rolagem horizontal ou empilhado).
+- [x] Cada coluna linka para a ficha do modelo.
 **Verification:** `npm test && npm run build`; conferir no navegador em largura de notebook e de celular.
 **Dependencies:** Checkpoint 3
 **Files:** `src/app/modelos/page.tsx`, `src/components/ModelCompare.tsx`
@@ -136,9 +136,9 @@ Plano: [`plan.md`](plan.md). Marque `[x]` ao concluir. Verificação padrão de 
 ### T10: Busca
 **Description:** Índice gerado no build a partir de modelos, parâmetros, sintomas, teoria e glossário; caixa de busca no cabeçalho com resultados agrupados por tipo. **Requer aprovação do `minisearch`.**
 **Acceptance criteria:**
-- [ ] Busca por "taxa", "fc", "virtual batch", "minúscula", "GPU" e "dropout" retorna a página esperada nos primeiros resultados.
-- [ ] Sinônimos comuns mapeados (ex.: "tokenizador" ≈ "tradutor", "régua" ≈ "scaler", "batch" ≈ "lote").
-- [ ] Navegável por teclado.
+- [x] Busca por "taxa", "fc", "virtual batch", "minúscula", "GPU" e "dropout" retorna a página esperada nos primeiros resultados.
+- [x] Sinônimos comuns mapeados (ex.: "tokenizador" ≈ "tradutor", "régua" ≈ "scaler", "batch" ≈ "lote").
+- [x] Navegável por teclado.
 **Verification:** `npm test` (consultas-chave); abrir no navegador.
 **Dependencies:** T3–T9, aprovação da dependência
 **Files:** `src/lib/search.ts`, `src/components/SearchBox.tsx`, `tests/search.test.ts`
@@ -147,8 +147,8 @@ Plano: [`plan.md`](plan.md). Marque `[x]` ao concluir. Verificação padrão de 
 ### T11: Home
 **Description:** Página inicial com busca em destaque e dois atalhos grandes: "Qual modelo uso?" (→ comparador) e "Algo deu errado" (→ diagnóstico), mais links para teoria, parâmetros, glossário e checklist.
 **Acceptance criteria:**
-- [ ] De qualquer ponto, ≤3 cliques ou 1 busca levam à ficha de qualquer modelo.
-- [ ] Aviso curto com a data do conteúdo e a origem (material OIAA 2026).
+- [x] De qualquer ponto, ≤3 cliques ou 1 busca levam à ficha de qualquer modelo.
+- [x] Aviso curto com a data do conteúdo e a origem (material OIAA 2026).
 **Verification:** `npm run build`; teste manual dos dois atalhos.
 **Dependencies:** T7, T8, T10
 **Files:** `src/app/page.tsx`
@@ -166,8 +166,8 @@ Plano: [`plan.md`](plan.md). Marque `[x]` ao concluir. Verificação padrão de 
 ### T12: Acessibilidade, tema e desempenho
 **Description:** Contraste AA nos dois temas, foco visível, landmarks, tabelas acessíveis, tamanho de fonte legível em notebook, e metas de Lighthouse.
 **Acceptance criteria:**
-- [ ] Lighthouse ≥ 90 em acessibilidade e desempenho (home e ficha de modelo).
-- [ ] Navegação completa por teclado; sem armadilhas de foco.
+- [x] Lighthouse ≥ 90 em acessibilidade e desempenho (home e ficha de modelo).
+- [x] Navegação completa por teclado; sem armadilhas de foco.
 **Verification:** Lighthouse local; passagem manual por teclado.
 **Dependencies:** Checkpoint 4
 **Files:** componentes e estilos (ajustes)
@@ -176,9 +176,9 @@ Plano: [`plan.md`](plan.md). Marque `[x]` ao concluir. Verificação padrão de 
 ### T13: Testes e2e
 **Description:** Playwright cobrindo os três fluxos da spec.
 **Acceptance criteria:**
-- [ ] Home → busca "dropout" → abre ficha.
-- [ ] Diagnóstico → sintoma → ficha de parâmetro.
-- [ ] Comparador mostra 3 modelos de uma trilha.
+- [x] Home → busca "dropout" → abre ficha.
+- [x] Diagnóstico → sintoma → ficha de parâmetro.
+- [x] Comparador mostra 3 modelos de uma trilha.
 **Verification:** `npm run test:e2e`
 **Dependencies:** T11
 **Files:** `e2e/*.spec.ts`, `playwright.config.ts`
