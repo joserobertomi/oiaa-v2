@@ -43,3 +43,7 @@ next-env.d.ts
 # configuração local e credenciais
 .aws/
 .claude/
+
+# playwright
+/test-results/
+/playwright-report/
