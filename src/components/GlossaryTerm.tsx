@@ -8,7 +8,7 @@ export function GlossaryTerm({ id }: { id: string }) {
   const entry = terms.get(id);
   if (!entry) throw new Error(`Termo de glossário inexistente: ${id}`);
   return (
-    <Link href={`/glossario#${id}`} title={entry.definition} className="underline decoration-dotted">
+    <Link href={`/glossario#${id}`} title={entry.definition} className="inline-block py-0.5 underline decoration-dotted">
       {entry.term}
     </Link>
   );

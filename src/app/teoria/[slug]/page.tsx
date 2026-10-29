@@ -25,7 +25,7 @@ export default async function Page({ params }: Props) {
   return (
     <article>
       <p className="text-sm">
-        <Link href="/teoria" className="underline">
+        <Link href="/teoria" className="inline-block py-1 underline">
           ← Teoria
         </Link>
       </p>
@@ -69,7 +69,7 @@ export default async function Page({ params }: Props) {
           <ul className="mt-2 list-disc space-y-1 pl-6">
             {symptoms.map((s) => (
               <li key={s.slug}>
-                <Link href={`/diagnostico/${s.slug}`} className="underline">
+                <Link href={`/diagnostico/${s.slug}`} className="inline-block py-1 underline">
                   {s.title}
                 </Link>
               </li>

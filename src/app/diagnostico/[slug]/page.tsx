@@ -30,7 +30,7 @@ export default async function Page({ params }: Props) {
   return (
     <article>
       <p className="text-sm">
-        <Link href="/diagnostico" className="underline">
+        <Link href="/diagnostico" className="inline-block py-1 underline">
           ← Diagnóstico
         </Link>
       </p>
@@ -56,7 +56,7 @@ export default async function Page({ params }: Props) {
           <ul className="mt-2 space-y-1">
             {theory.map((t) => (
               <li key={t.slug}>
-                <Link href={`/teoria/${t.slug}`} className="underline">
+                <Link href={`/teoria/${t.slug}`} className="inline-block py-1 underline">
                   {t.title}
                 </Link>
               </li>
@@ -72,7 +72,7 @@ export default async function Page({ params }: Props) {
             {models.map((m) => (
               <li key={m.slug}>
                 Modelo:{" "}
-                <Link href={`/modelos/${m.slug}`} className="underline">
+                <Link href={`/modelos/${m.slug}`} className="inline-block py-1 underline">
                   {m.name}
                 </Link>
               </li>
@@ -80,7 +80,7 @@ export default async function Page({ params }: Props) {
             {related.map(({ param, model }) => (
               <li key={param.id}>
                 Parâmetro:{" "}
-                <Link href={`/modelos/${model.slug}#${param.id}`} className="underline">
+                <Link href={`/modelos/${model.slug}#${param.id}`} className="inline-block py-1 underline">
                   {model.name} · {param.name}
                 </Link>
               </li>

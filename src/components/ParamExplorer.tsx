@@ -62,7 +62,7 @@ export function ParamExplorer({ models, params }: { models: Model[]; params: Par
 
       <div className="mt-6 grid gap-4 md:grid-cols-2">
         {visible.map((p) => (
-          <ParamCard key={p.id} param={p} modelName={names.get(p.modelSlug)} />
+          <ParamCard key={p.id} param={p} modelName={names.get(p.modelSlug)} headingLevel={2} />
         ))}
       </div>
     </div>

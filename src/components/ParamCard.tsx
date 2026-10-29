@@ -12,22 +12,26 @@ const COMPLEMENT_LABELS = [
 export function ParamCard({
   param,
   modelName,
+  headingLevel = 3,
 }: {
   param: Param;
   /** quando informado, mostra o modelo dono com link para a ficha */
   modelName?: string;
+  /** o título do cartão segue o nível da seção que o contém */
+  headingLevel?: 2 | 3;
 }) {
+  const Heading = `h${headingLevel}` as const;
   const extras = COMPLEMENT_LABELS.filter(([key]) => param.complement?.[key]);
 
   return (
     <article id={param.id} className="scroll-mt-4 rounded-lg border p-4">
       <header className="flex flex-wrap items-center gap-2">
-        <h3 className="font-semibold">{param.name}</h3>
+        <Heading className="font-semibold">{param.name}</Heading>
         {param.adjust && <Badge>você ajusta</Badge>}
         {modelName && (
           <Link
             href={`/modelos/${param.modelSlug}#${param.id}`}
-            className="ml-auto text-sm underline"
+            className="ml-auto inline-block py-1 text-sm underline"
           >
             {modelName}
           </Link>

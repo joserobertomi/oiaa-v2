@@ -12,7 +12,7 @@ export function ThemeToggle() {
     <button
       type="button"
       onClick={toggle}
-      className="rounded-md border px-3 py-1 text-sm hover:bg-black/5 dark:hover:bg-white/10"
+      className="rounded-md border px-3 py-2 text-sm hover:bg-black/5 dark:hover:bg-white/10"
     >
       Alternar tema
     </button>

@@ -22,7 +22,7 @@ export default function Page() {
                 {s.check}
               </label>
               <p className="text-sm">
-                <Link href={`/diagnostico/${s.slug}`} className="underline">
+                <Link href={`/diagnostico/${s.slug}`} className="inline-block py-1 underline">
                   Por que isso importa
                 </Link>
               </p>
