@@ -23,20 +23,20 @@ App web de **consulta rápida** para alunos de ensino médio, iniciantes em IA, 
 ### Fora de escopo (v1)
 Login, backend, banco de dados, anotações dos alunos ou dados do desafio real, comparador de experimentos, modo estudo/quiz, i18n, conteúdo dos 18 laboratórios interativos (só o texto e os resultados de exemplo).
 
-## Premissas (corrija se errado)
+## Premissas (confirmadas na construção)
 1. Next.js App Router + TypeScript, renderização **estática** (SSG), sem API routes.
 2. Conteúdo em arquivos de dados tipados no repositório (TypeScript), não em CMS.
 3. Português do Brasil; tom direto e analógico como o material; todo jargão linka para o glossário.
-4. Uso em notebook, com internet. Funciona em celular, mas notebook é o alvo.
-5. Deploy na Vercel, link público.
-6. Tailwind CSS para estilo; modo claro/escuro.
+4. Uso em notebook, com internet. Funciona em celular (sem rolagem horizontal em 390 px), mas notebook é o alvo.
+5. Deploy na Vercel, link público: https://verumakers-oiaa-v2.vercel.app/ (com `noindex`: circula só pelo link).
+6. Tailwind CSS v4, tema claro/escuro por classe `dark`, **fonte do sistema** (sem `next/font`: mais rápido e sem troca de fonte).
 
 ## Tech Stack
-- Next.js (versão estável atual), React, TypeScript `strict`
-- Tailwind CSS
-- Busca client-side sobre índice gerado no build (candidata: `minisearch`, ~6 KB; aprovado pelo professor)
-- Vitest + Testing Library (unit/integridade de dados), Playwright (smoke e2e)
-- Sem banco, sem autenticação, sem analytics na v1
+- Next.js 16 (Cache Components ligado: por isso não se usa `dynamicParams`), React 19, TypeScript `strict`
+- Tailwind CSS v4
+- Busca client-side com `minisearch`, carregada sob demanda no primeiro foco da caixa, com sinônimos e sem acento
+- Vitest (integridade de dados, busca, páginas via `renderToStaticMarkup`) e Playwright (e2e) usando o Chrome instalado (`channel: "chrome"`), sem baixar navegador
+- Sem banco, sem autenticação, sem analytics
 
 ## Commands
 ```
@@ -48,25 +48,27 @@ Test:       npm test                 # vitest run
 Test watch: npm run test:watch
 E2E:        npm run test:e2e         # playwright test
 Validar conteúdo: npm run content:check   # integridade dos dados (links, ids, campos)
+Revisão:    npm run content:review   # gera revisao/*.md com os complementos do autor
 ```
 
 ## Project Structure
 ```
 docs/                    → material bruto da OIAA em markdown (fonte, somente leitura)
+revisao/                 → lista de revisão dos complementos (gerada por content:review)
+scripts/                 → content-check.ts, review.ts (rodam direto no Node)
 src/app/                 → rotas (App Router)
-  page.tsx               → home: busca + atalhos ("Qual modelo?", "Algo deu errado")
-  modelos/               → lista/comparador
-  modelos/[slug]/        → ficha do modelo (quando usar, pegadinha, parâmetros)
-  parametros/            → todos os parâmetros, filtráveis por modelo/trilha
-  diagnostico/           → por sintoma
+  page.tsx               → home: busca em destaque + atalhos
+  modelos/               → comparador por trilha
+  modelos/[slug]/        → ficha do modelo
+  parametros/            → todos os parâmetros, com filtro por trilha/modelo
+  diagnostico/[slug]/    → por sintoma
   teoria/[slug]/         → conceitos
-  glossario/
-  checklist/             → erros silenciosos
-src/content/             → dados tipados (modelos, parametros, sintomas, teoria, glossario)
-src/content/schema.ts    → tipos + validação
-src/components/          → UI (Callout, ParamCard, ModelCompare, SearchBox, GlossaryTerm)
-src/lib/                 → busca, helpers de links entre conteúdos
-tests/                   → unit/integridade
+  glossario/  checklist/
+src/content/             → dados tipados: models/, params/, symptoms.ts, theory.ts, glossary.ts, compare.ts
+src/content/schema.ts    → tipos;  validate.ts → regras de integridade
+src/components/          → ParamCard, ParamExplorer, ModelCompare, SearchBox, GlossaryTerm, Header, Footer...
+src/lib/                 → search.ts (índice e busca), search-types.ts, nav.ts
+tests/                   → unit/integridade/páginas
 e2e/                     → Playwright
 ```
 
@@ -74,26 +76,19 @@ e2e/                     → Playwright
 ```ts
 type Source = "oiaa" | "complemento";
 
-interface Model {
-  slug: string; track: "tabular" | "visao" | "texto"; name: string;
-  profile: string;            // entrada, intermediária, avançada, ...
-  chooseIf: string; expect: string; pitfall: string;
-  params: string[];           // ids de Param
-  source: Source;
-}
+interface Model { slug; track; name; profile; summary; chooseIf; expect; pitfall; ready; params: string[]; source }
 interface Param {
-  id: string; modelSlug: string; name: string;
-  default?: string; suggested?: string; range?: string;
-  what: string; ifRaise: string; ifLower: string; commonMistake?: string;
+  id; modelSlug; name; default?; suggested?; range?; what;
+  adjust?: boolean;                 // "botão que você ajusta" na ficha do modelo
   glossary?: string[];
-  complement?: { ifRaise?: string; ifLower?: string; commonMistake?: string }; // sempre do autor
-  source: Source;                // origem do restante da ficha
+  complement?: { note?; ifRaise?; ifLower?; commonMistake? };   // sempre do autor
+  source: Source;                   // origem do restante da ficha
 }
-interface Symptom {
-  slug: string; title: string; likelyCauses: string[];
-  fix: string; related: { models?: string[]; params?: string[]; theory?: string[] };
-  source: Source;
-}
+interface Symptom { slug; title; group: "silencioso" | "curvas" | "configuracao" | "metrica";
+  check?: string;                   // só nos 10 erros silenciosos (vira o /checklist)
+  likelyCauses: string[]; fix; related: { models?; params?; theory? }; source }
+interface Theory { slug; title; short; explanation: string[]; analogy?; rule; commonMistake?; lab?; glossary?; source }
+interface GlossaryEntry { id; term; category; definition; source }
 ```
 
 ## Code Style
@@ -113,7 +108,7 @@ export function ParamCard({ param }: { param: Param }) {
         <div><dt>Faixa</dt><dd>{param.range ?? "—"}</dd></div>
       </dl>
       <p className="mt-2">{param.what}</p>
-      {param.source === "complemento" && <Badge>complemento</Badge>}
+      {param.complement && <Badge>complemento</Badge>}
     </article>
   );
 }
@@ -143,10 +138,13 @@ Convenções: arquivos `kebab-case`, componentes `PascalCase`, slugs de conteúd
 7. Acessibilidade e desempenho: Lighthouse ≥ 90 em acessibilidade e desempenho nas páginas home e ficha de modelo; navegação por teclado; contraste AA em claro e escuro.
 8. `npm run build` e todos os testes passam; deploy na Vercel funcionando.
 
+## Status (2026-10-29)
+Critérios 1 a 8 atendidos e verificados no link público: 9 modelos e 110 parâmetros; 21 sintomas; 17 páginas de teoria; 31 termos; comparador; busca; acessibilidade Lighthouse 100; desempenho com mediana 91 a 95 e variação de 84 a 97 por causa do tempo de bloqueio do JS. Testes: 71 unitários e 9 e2e.
+
 ## Open Questions
-1. **Pós-prova:** o professor quer manter o app depois da competição ou é descartável? (Afeta o rigor do schema.)
-2. **Validação do complemento:** quem revisa o conteúdo de `source: "complemento"` antes de ir para os alunos? (Sugestão: o professor, com um relatório gerado por `content:check`.)
-3. **Gabaritos das provas dos capítulos:** o material não os expõe; ficam fora do app, a menos que o professor forneça.
-4. **Regras da competição:** a prova limita o que pode ser consultado (ex.: só material "oficial")? Se limitar, o app deve exibir só `source: "oiaa"` num modo estrito.
-5. ~~Nome do app~~ Decidido: **Verumakers OIAA** (sem logo ou marca oficial da organização).
-6. ~~Busca~~ `minisearch` aprovado.
+1. **Pós-prova:** o professor quer manter o app depois da competição ou é descartável?
+2. **Revisão dos complementos (aberta, bloqueia distribuir o link):** 75 itens em `revisao/*.md`, a revisar pelo professor.
+3. **Gabaritos das provas dos capítulos:** o material não os expõe; ficam fora do app.
+4. **Modo estrito "só OIAA":** não implementado; o professor preferiu a lista de revisão.
+5. ~~Nome do app~~ **Verumakers OIAA**.  ~~Busca~~ `minisearch`.  ~~Indexação~~ `noindex`.
+6. ~~Dúvidas do material~~ Resolvidas pela documentação oficial: o token inicial do XLM-RoBERTa é `<s>` (o material diz `[CLS]`), e o custo do ViT-B/16 é cerca de 45 vezes o da EfficientNet-B0 (o material diz quatro vezes). As duas divergências estão sinalizadas no site.
