@@ -4,6 +4,7 @@ import { Badge } from "./Badge";
 import { GlossaryTerm } from "./GlossaryTerm";
 
 const COMPLEMENT_LABELS = [
+  ["note", "Nota"],
   ["ifRaise", "Se subir"],
   ["ifLower", "Se baixar"],
   ["commonMistake", "Erro comum"],

@@ -238,7 +238,7 @@ export const theory: Theory[] = [
     short: "O modelo que você usa foi treinado por outra pessoa, com dados que ninguém da equipe escolheu. Isso traz três problemas e três pontos para o relatório.",
     explanation: [
       "Três problemas: ele herda o que estava torto nos dados originais; erra com confiança (97% de certeza não é promessa, é uma conta interna); e pode acertar pelo motivo errado.",
-      "Para o relatório: opacidade (dá para dizer quanto acerta, é muito mais difícil dizer por quê); licença (uma das bases só pode ser usada sem fim comercial e exige citar a origem); energia (o modelo mais caro gasta bem mais por imagem que o mais barato; compare os GFLOPS nas fichas dos modelos).",
+      "Para o relatório: opacidade (dá para dizer quanto acerta, é muito mais difícil dizer por quê); licença (uma das bases só pode ser usada sem fim comercial e exige citar a origem); energia (o ViT-B/16 usa 17,56 GFLOPS por imagem contra 0,39 da EfficientNet-B0, cerca de 45 vezes mais; o material original fala em quatro vezes, mas os números publicados pela PyTorch dão essa diferença maior).",
       "Usar IA generativa como apoio é permitido, mas é preciso entender e conferir tudo o que ela entregar, e o relatório tem que descrever esse uso.",
     ],
     rule: "Escolher o modelo menor quando ele resolve é decisão técnica e ética. No relatório, uma escolha justificada por custo pesa tanto quanto uma justificada por métrica.",

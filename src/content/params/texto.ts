@@ -266,10 +266,11 @@ export const textoParams: Param[] = [
   }),
   xlm("token-inicial", {
     name: "token inicial",
-    suggested: "[CLS]",
-    what: "Outra convenção. As classes automáticas resolvem isso sozinhas.",
+    suggested: "<s>",
+    what: "O XLM-RoBERTa abre a sequência com <s> e fecha com </s>, outra convenção que a dos BERTs. As classes automáticas resolvem isso sozinhas.",
     complement: {
-      commonMistake: "Escrever o token inicial à mão. Use as classes automáticas e confira o valor na documentação do modelo.",
+      note: "Diverge do material: a ficha da OIAA cita [CLS], mas na documentação do Hugging Face (XLMRobertaTokenizer) o token de classificação é <s>.",
+      commonMistake: "Escrever o token inicial à mão, ou usar [CLS] como nos BERTs. Use as classes automáticas.",
     },
   }),
   xlm("estabilidade", {

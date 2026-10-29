@@ -34,7 +34,7 @@ export interface Param {
   /** ids do glossário citados na explicação */
   glossary?: string[];
   /** "se subir / se baixar / erro comum": quase nunca estão no material */
-  complement?: { ifRaise?: string; ifLower?: string; commonMistake?: string };
+  complement?: { note?: string; ifRaise?: string; ifLower?: string; commonMistake?: string };
   source: Source;
 }
 

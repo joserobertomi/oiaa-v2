@@ -33,4 +33,10 @@ describe("trilha de texto", () => {
     expect(byId("bertimbau-identificador")?.suggested).toBe("neuralmind/bert-base-portuguese-cased");
     expect(byId("distilbert-multilingual-identificador")?.suggested).toBe("distilbert-base-multilingual-cased");
   });
+
+  it("usa <s> como token inicial do XLM-RoBERTa e avisa que diverge do material", () => {
+    const p = byId("xlm-roberta-token-inicial");
+    expect(p?.suggested).toBe("<s>");
+    expect(p?.complement?.note).toContain("Diverge do material");
+  });
 });
