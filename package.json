@@ -10,6 +10,7 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "content:check": "node --no-warnings scripts/content-check.ts",
+    "content:review": "node --no-warnings scripts/review.ts",
     "test:watch": "vitest",
     "test:e2e": "playwright test"
   },
